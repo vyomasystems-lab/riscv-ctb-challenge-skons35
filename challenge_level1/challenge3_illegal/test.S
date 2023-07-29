@@ -22,8 +22,13 @@ mtvec_handler:
   csrr t0, mcause
   bne t0, t1, fail
   csrr t0, mepc
-
+  # VA : what we do : 
+  #      skip invalid instruction, 
+  #      and resume where to jump to fail
+  addi t0, t0, 8 # VA added
+  csrw mepc, t0  # will resume after ill. instr. after mret
   mret
+
 
 RVTEST_CODE_END
 
